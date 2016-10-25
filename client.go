@@ -20,6 +20,7 @@ type Client struct {
 	baseUrl string
 	key     string
 	nodeId  int
+	token string
 }
 
 func NewClient() *Client {
