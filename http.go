@@ -1,15 +1,15 @@
 package musdk
 
 import (
-	"net/http"
-	"io/ioutil"
 	"bytes"
+	"io/ioutil"
+	"net/http"
 )
 
-func httpReq(uri string, method string, buffer *bytes.Buffer) (string, int, error) {
+func (c *Client) httpReq(uri string, method string, buffer *bytes.Buffer) (string, int, error) {
 	client := &http.Client{}
 	req, _ := http.NewRequest(method, uri, buffer)
-	req.Header.Set("Token", GetClient().token)
+	req.Header.Set("Token", c.token)
 	res, err := client.Do(req)
 
 	defer res.Body.Close()
@@ -20,10 +20,10 @@ func httpReq(uri string, method string, buffer *bytes.Buffer) (string, int, erro
 	return string(body), res.StatusCode, err
 }
 
-func httpGet(uri string) (string, int, error) {
-	return httpReq(uri, http.MethodGet, nil)
+func (c *Client) httpGet(uri string) (string, int, error) {
+	return c.httpReq(uri, http.MethodGet, nil)
 }
 
-func httpPost(uri, data string) (string, int, error) {
-	return httpReq(uri, http.MethodPost, bytes.NewBuffer([]byte(data)))
+func (c *Client) httpPost(uri, data string) (string, int, error) {
+	return c.httpReq(uri, http.MethodPost, bytes.NewBuffer([]byte(data)))
 }
