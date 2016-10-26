@@ -1,6 +1,10 @@
 package musdk
 
-import (
+import ()
+
+const (
+	StatusEnable  = 1
+	StatusDisable = 0
 )
 
 type User struct {
@@ -13,5 +17,3 @@ type User struct {
 	U              int64  `json:"u"`
 	D              int64  `json:"d"`
 }
-
-
