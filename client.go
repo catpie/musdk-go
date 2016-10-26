@@ -8,7 +8,6 @@ import (
 )
 
 var (
-	client                = new(Client)
 	UpdateTrafficFail     = errors.New("Update Traffic Failed ")
 	UpdateOnlineCountFail = errors.New("Update Online Count Failed")
 	StatusCodeError       = errors.New("Status code is not OK")
@@ -16,9 +15,16 @@ var (
 
 type Client struct {
 	baseUrl string
-	key     string
 	nodeId  int
 	token   string
+}
+
+func NewClient(baseUrl, token string, nodeId int) *Client {
+	client := new(Client)
+	client.baseUrl = baseUrl
+	client.token = token
+	client.nodeId = nodeId
+	return client
 }
 
 func (c *Client) getUsersUri() string {
@@ -38,7 +44,7 @@ func (c *Client) GetUsers() ([]User, error) {
 	}
 
 	if statusCode != http.StatusOK {
-		return users, StatusCodeError
+		return users, errors.New(fmt.Sprintf("status code: %d", statusCode))
 	}
 
 	var ret UserDataRet

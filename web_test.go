@@ -5,5 +5,15 @@ import (
 )
 
 func TestWeb(t *testing.T) {
-	t.Log("test")
+	baseUrl := "http://x5.dev/mu"
+	nodeId := 1
+	token := "123"
+
+	client := NewClient(baseUrl, token, nodeId)
+
+	users, err := client.GetUsers()
+
+	t.Log(err)
+	t.Log(users)
+
 }
