@@ -56,6 +56,17 @@ func (c *Client) GetUsers() ([]User, error) {
 	return ret.Data, nil
 }
 
-func (c *Client) UpdateTraffic() error {
+func (c *Client) UpdateTraffic(logs []UserTrafficLog) error {
+	data, err := json.Marshal(logs)
+	if err != nil {
+		return err
+	}
+	_, statusCode, err := c.httpPost(c.postTrafficUri(), string(data))
+	if err != nil {
+		return err
+	}
+	if statusCode != http.StatusOK {
+		return errors.New(fmt.Sprintf("status code: %d", statusCode))
+	}
 	return nil
 }
