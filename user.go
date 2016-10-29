@@ -11,7 +11,7 @@ const (
 )
 
 type User struct {
-	Id             int    `json:"id"`
+	Id             int64    `json:"id"`
 	Port           int    `json:"port"`
 	Passwd         string `json:"passwd"`
 	Method         string `json:"method"`
@@ -25,7 +25,7 @@ func (u User) GetPort() int {
 	return u.Port
 }
 
-func (u User) GetId() int {
+func (u User) GetId() int64 {
 	return u.Id
 }
 
