@@ -25,6 +25,10 @@ func (u User) GetPort() int {
 	return u.Port
 }
 
+func (u User) GetId() int {
+	return u.Id
+}
+
 func (u User) GetPasswd() string {
 	return u.Passwd
 }
