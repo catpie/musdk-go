@@ -13,6 +13,7 @@ func (c *Client) httpReq(uri string, method string, buffer string) (string, int,
 		return "", 0, err
 	}
 	req.Header.Set("Token", c.token)
+	req.Header.Set("Content-Type", "application/json")
 	res, err := client.Do(req)
 
 	if err != nil {
