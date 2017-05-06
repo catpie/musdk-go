@@ -8,8 +8,9 @@ func TestWeb(t *testing.T) {
 	baseUrl := "http://x5.dev/mu"
 	nodeId := 1
 	token := "123"
+	sType := TypeSs
 
-	client := NewClient(baseUrl, token, nodeId)
+	client := NewClient(baseUrl, token, nodeId, sType)
 
 	users, err := client.GetUsers()
 

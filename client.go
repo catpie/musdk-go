@@ -17,13 +17,15 @@ type Client struct {
 	baseUrl string
 	nodeId  int
 	token   string
+	sType   int // service Type
 }
 
-func NewClient(baseUrl, token string, nodeId int) *Client {
+func NewClient(baseUrl, token string, nodeId, sType int) *Client {
 	client := new(Client)
 	client.baseUrl = baseUrl
 	client.token = token
 	client.nodeId = nodeId
+	client.sType = sType
 	return client
 }
 

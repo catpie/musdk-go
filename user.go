@@ -11,7 +11,7 @@ const (
 )
 
 type User struct {
-	Id             int64    `json:"id"`
+	Id             int64  `json:"id"`
 	Port           int    `json:"port"`
 	Passwd         string `json:"passwd"`
 	Method         string `json:"method"`

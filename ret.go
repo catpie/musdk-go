@@ -1,5 +1,10 @@
 package musdk
 
+const (
+	TypeSs   = 0 // Default, Shadowsocks
+	TypeHttp = 1 // Http proxy
+)
+
 type BaseRet struct {
 	Msg string `json:"msg"`
 }
