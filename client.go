@@ -33,6 +33,10 @@ func (c *Client) getUsersUri() string {
 	return fmt.Sprintf("%s/nodes/%d/users", c.baseUrl, c.nodeId)
 }
 
+func (c *Client) getV2rayUsersUri() string {
+	return fmt.Sprintf("%s/nodes/%d/v2rayUsers", c.baseUrl, c.nodeId)
+}
+
 func (c *Client) postTrafficUri() string {
 	return fmt.Sprintf("%s/nodes/%d/traffic", c.baseUrl, c.nodeId)
 }
@@ -56,6 +60,17 @@ func (c *Client) GetUsers() ([]User, error) {
 	}
 
 	return ret.Data, nil
+}
+
+func (c *Client) GetV2rayUsersData() (string, error) {
+	resp, statusCode, err := c.httpGet(c.getV2rayUsersUri())
+	if err != nil {
+		return "", err
+	}
+	if statusCode != http.StatusOK {
+		return "", errors.New(fmt.Sprintf("status code: %d", statusCode))
+	}
+	return resp, nil
 }
 
 func (c *Client) UpdateTraffic(logs []UserTrafficLog) error {
