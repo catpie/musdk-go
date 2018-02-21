@@ -10,6 +10,29 @@ const (
 	StatusDisable = 0
 )
 
+type VUser struct {
+	Email   string `json:"email"`
+	UUID    string `json:"uuid"`
+	AlterID uint32 `json:"alter_id"`
+	Level   uint32 `json:"level"`
+}
+
+func (v *VUser) GetEmail() string {
+	return v.Email
+}
+
+func (v *VUser) GetUUID() string {
+	return v.UUID
+}
+
+func (v *VUser) GetAlterID() uint32 {
+	return v.AlterID
+}
+
+func (v *VUser) GetLevel() uint32 {
+	return v.Level
+}
+
 type User struct {
 	Id             int64  `json:"id"`
 	Port           int    `json:"port"`
@@ -19,6 +42,8 @@ type User struct {
 	TransferEnable int64  `json:"transfer_enable"`
 	U              int64  `json:"u"`
 	D              int64  `json:"d"`
+
+	V2rayUser VUser `json:"v2ray_user"`
 }
 
 func (u User) GetPort() int {
