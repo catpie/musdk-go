@@ -1,8 +1,11 @@
 package musdk
 
 const (
-	TypeSs   = 0 // Default, Shadowsocks
-	TypeHttp = 1 // Http proxy
+	TypeSs         = 0 // Default, Shadowsocks
+	TypeHttp       = 1 // Http proxy
+	TypeForward    = 2 // forward
+	TypeVPN        = 3 // vpn
+	TypeAnyConnect = 4 // AnyConnect
 )
 
 type BaseRet struct {
