@@ -22,6 +22,7 @@ func (c *Client) submitTrafficLog() error {
 	defer c.userTFmu.Unlock()
 
 	if len(c.userTraffic) == 0 {
+		c.logger.Infof("not traffic log,skip")
 		return nil
 	}
 
@@ -35,7 +36,7 @@ func (c *Client) submitTrafficLog() error {
 	if err != nil {
 		return err
 	}
-
+	c.logger.Infof("post traffic log len %d", len(logs))
 	c.userTraffic = make(map[int64]UserTrafficLog)
 	return nil
 }

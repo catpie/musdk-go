@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
+	"github.com/orvice/kit/log"
 )
 
 var (
@@ -22,6 +23,7 @@ type Client struct {
 
 	userTraffic map[int64]UserTrafficLog
 	userTFmu    *sync.Mutex
+	logger      log.Logger
 }
 
 func NewClient(baseUrl, token string, nodeId, sType int) *Client {
@@ -33,7 +35,12 @@ func NewClient(baseUrl, token string, nodeId, sType int) *Client {
 		sType:       sType,
 		userTraffic: make(map[int64]UserTrafficLog),
 		userTFmu:    new(sync.Mutex),
+		logger:      log.NewDefaultLogger(),
 	}
+}
+
+func (c *Client) SetLogger(l log.Logger) {
+	c.logger = l
 }
 
 func (c *Client) getUsersUri() string {
