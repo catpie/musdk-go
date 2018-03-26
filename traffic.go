@@ -2,7 +2,7 @@ package musdk
 
 import "time"
 
-func (c *Client) saveTrafficLog(l UserTrafficLog) {
+func (c *Client) SaveTrafficLog(l UserTrafficLog) {
 	c.userTFmu.Lock()
 	defer c.userTFmu.Unlock()
 
