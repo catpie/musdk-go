@@ -43,7 +43,7 @@ func (c *Client) submitTrafficLog() error {
 
 func (c *Client) UpdateTrafficDaemon() {
 	for {
-		c.UpdateTrafficDaemon()
+		c.submitTrafficLog()
 		time.Sleep(time.Minute)
 	}
 }
