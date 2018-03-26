@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"sync"
 )
 
 var (
@@ -18,15 +19,21 @@ type Client struct {
 	nodeId  int
 	token   string
 	sType   int // service Type
+
+	userTraffic map[int64]UserTrafficLog
+	userTFmu    *sync.Mutex
 }
 
 func NewClient(baseUrl, token string, nodeId, sType int) *Client {
-	client := new(Client)
-	client.baseUrl = baseUrl
-	client.token = token
-	client.nodeId = nodeId
-	client.sType = sType
-	return client
+
+	return &Client{
+		baseUrl:     baseUrl,
+		token:       token,
+		nodeId:      nodeId,
+		sType:       sType,
+		userTraffic: make(map[int64]UserTrafficLog),
+		userTFmu:    new(sync.Mutex),
+	}
 }
 
 func (c *Client) getUsersUri() string {
@@ -60,17 +67,6 @@ func (c *Client) GetUsers() ([]User, error) {
 	}
 
 	return ret.Data, nil
-}
-
-func (c *Client) GetV2rayUsersData() (string, error) {
-	resp, statusCode, err := c.httpGet(c.getV2rayUsersUri())
-	if err != nil {
-		return "", err
-	}
-	if statusCode != http.StatusOK {
-		return "", errors.New(fmt.Sprintf("status code: %d", statusCode))
-	}
-	return resp, nil
 }
 
 func (c *Client) UpdateTraffic(logs []UserTrafficLog) error {
