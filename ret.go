@@ -6,6 +6,7 @@ const (
 	TypeForward    = 2 // forward
 	TypeVPN        = 3 // vpn
 	TypeAnyConnect = 4 // AnyConnect
+	TypeV2ray      = 5 // V2ray
 )
 
 type BaseRet struct {
