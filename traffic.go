@@ -27,9 +27,10 @@ func (c *Client) submitTrafficLog() error {
 	}
 
 	logs := make([]UserTrafficLog, len(c.userTraffic))
-
-	for k, v := range c.userTraffic {
-		logs[k] = v
+	i := 0
+	for _, v := range c.userTraffic {
+		logs[i] = v
+		i++
 	}
 
 	err := c.UpdateTraffic(logs)
