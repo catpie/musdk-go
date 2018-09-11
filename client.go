@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/orvice/kit/log"
 	"net/http"
 	"sync"
-	"github.com/orvice/kit/log"
 )
 
 var (
@@ -55,6 +55,10 @@ func (c *Client) postTrafficUri() string {
 	return fmt.Sprintf("%s/nodes/%d/traffic", c.baseUrl, c.nodeId)
 }
 
+func (c *Client) getNodesUri() string {
+	return fmt.Sprintf("%s/nodes", c.baseUrl)
+}
+
 func (c *Client) GetUsers() ([]User, error) {
 	var users []User
 	resp, statusCode, err := c.httpGet(c.getUsersUri())
@@ -89,4 +93,20 @@ func (c *Client) UpdateTraffic(logs []UserTrafficLog) error {
 		return errors.New(fmt.Sprintf("status code: %d", statusCode))
 	}
 	return nil
+}
+
+func (c *Client) GetNodes() ([]Node, error) {
+	resp, statusCode, err := c.httpGet(c.getNodesUri())
+	if err != nil {
+		return nil, err
+	}
+	if statusCode != http.StatusOK {
+		return nil, errors.New(fmt.Sprintf("status code: %d", statusCode))
+	}
+	var ret NodeDataRet
+	err = json.Unmarshal([]byte(resp), &ret)
+	if err != nil {
+		return nil, err
+	}
+	return ret.Data, nil
 }

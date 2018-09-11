@@ -9,6 +9,12 @@ const (
 	TypeV2ray      = 5 // V2ray
 )
 
+type Node struct {
+	ID                int32  `json:"id"`
+	Name              string `json:"name"`
+	ServerMonitorAddr string `json:"server_monitor_addr"`
+}
+
 type BaseRet struct {
 	Msg string `json:"msg"`
 }
@@ -16,6 +22,11 @@ type BaseRet struct {
 type UserDataRet struct {
 	BaseRet
 	Data []User `json:"data"`
+}
+
+type NodeDataRet struct {
+	BaseRet
+	Data []Node `json:"data"`
 }
 
 type UserTrafficLog struct {
