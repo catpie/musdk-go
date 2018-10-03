@@ -1,5 +1,7 @@
 package musdk
 
+import "fmt"
+
 const (
 	TypeSs         = 0 // Default, Shadowsocks
 	TypeHttp       = 1 // Http proxy
@@ -13,6 +15,16 @@ type Node struct {
 	ID                int32  `json:"id"`
 	Name              string `json:"name"`
 	ServerMonitorAddr string `json:"server_monitor_addr"`
+	ServerMonitorPort int32  `json:"server_monitor_port"`
+	Server            string `json:"server"`
+}
+
+func (n *Node) GetMonitorWsAddr() string {
+	var port int32 = 8080
+	if n.ServerMonitorPort != 0 {
+		port = n.ServerMonitorPort
+	}
+	return fmt.Sprintf("http://%s:%d", n.Server, port)
 }
 
 type BaseRet struct {
