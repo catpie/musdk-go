@@ -24,7 +24,7 @@ func (n *Node) GetMonitorWsAddr() string {
 	if n.ServerMonitorPort != 0 {
 		port = n.ServerMonitorPort
 	}
-	return fmt.Sprintf("http://%s:%d", n.Server, port)
+	return fmt.Sprintf("http://%s:%d/ws", n.Server, port)
 }
 
 type BaseRet struct {
