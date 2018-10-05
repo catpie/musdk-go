@@ -12,11 +12,12 @@ const (
 )
 
 type Node struct {
-	ID                int32  `json:"id"`
-	Name              string `json:"name"`
-	ServerMonitorAddr string `json:"server_monitor_addr"`
-	ServerMonitorPort int32  `json:"server_monitor_port"`
-	Server            string `json:"server"`
+	ID                    int32  `json:"id"`
+	Name                  string `json:"name"`
+	ServerMonitorAddr     string `json:"server_monitor_addr"`
+	ServerMonitorPort     int32  `json:"server_monitor_port"`
+	ServerMonitorGrpcPort int32  `json:"server_monitor_grpc_port"`
+	Server                string `json:"server"`
 }
 
 func (n *Node) GetMonitorWsAddr() string {
@@ -25,6 +26,14 @@ func (n *Node) GetMonitorWsAddr() string {
 		port = n.ServerMonitorPort
 	}
 	return fmt.Sprintf("ws://%s:%d/ws", n.Server, port)
+}
+
+func (n *Node) GetMonitorGrpcAddr() string {
+	var port int32 = 8090
+	if n.ServerMonitorGrpcPort != 0 {
+		port = n.ServerMonitorGrpcPort
+	}
+	return fmt.Sprintf("%s:%d", n.Server, port)
 }
 
 type BaseRet struct {
