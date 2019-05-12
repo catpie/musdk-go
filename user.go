@@ -42,6 +42,7 @@ type User struct {
 	TransferEnable int64  `json:"transfer_enable"`
 	U              int64  `json:"u"`
 	D              int64  `json:"d"`
+	IsAdmin        int    `json:"is_admin"`
 
 	V2rayUser VUser `json:"v2ray_user"`
 }
@@ -67,6 +68,13 @@ func (u User) IsEnable() bool {
 		return false
 	}
 	if u.TransferEnable < (u.U + u.D) {
+		return false
+	}
+	return true
+}
+
+func (u user) IsAdmin() bool {
+	if u.IsAdmin == 0 {
 		return false
 	}
 	return true
