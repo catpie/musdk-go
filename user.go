@@ -73,7 +73,7 @@ func (u User) IsEnable() bool {
 	return true
 }
 
-func (u User) IsAdmin() bool {
+func (u User) Admin() bool {
 	if u.IsAdmin == 0 {
 		return false
 	}
