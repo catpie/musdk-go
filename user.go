@@ -42,6 +42,7 @@ type User struct {
 	TransferEnable int64  `json:"transfer_enable"`
 	U              int64  `json:"u"`
 	D              int64  `json:"d"`
+	IsAdmin        bool    `json:"is_admin"`
 
 	V2rayUser VUser `json:"v2ray_user"`
 }
@@ -70,6 +71,10 @@ func (u User) IsEnable() bool {
 		return false
 	}
 	return true
+}
+
+func (u User) Admin() bool {
+	return u.IsAdmin
 }
 
 func (u User) GetCipher() (*ss.Cipher, error, bool) {
