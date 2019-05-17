@@ -43,8 +43,13 @@ type User struct {
 	U              int64  `json:"u"`
 	D              int64  `json:"d"`
 	IsAdmin        bool    `json:"is_admin"`
+	Class          int    `json:"class"`
 
 	V2rayUser VUser `json:"v2ray_user"`
+}
+
+func (u User) GetClass() int {
+	return u.Class
 }
 
 func (u User) GetPort() int {
