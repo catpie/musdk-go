@@ -1,10 +1,5 @@
 package musdk
 
-import (
-	ss "github.com/orvice/shadowsocks-go/shadowsocks"
-	"strings"
-)
-
 const (
 	StatusEnable  = 1
 	StatusDisable = 0
@@ -70,16 +65,4 @@ func (u User) IsEnable() bool {
 		return false
 	}
 	return true
-}
-
-func (u User) GetCipher() (*ss.Cipher, error, bool) {
-	method := u.Method
-	auth := false
-
-	if strings.HasSuffix(method, "-auth") {
-		method = method[:len(method)-5]
-		auth = true
-	}
-	s, e := ss.NewCipher(method, u.Passwd)
-	return s, e, auth
 }
