@@ -1,6 +1,8 @@
 package musdk
 
-import "time"
+import (
+	"time"
+)
 
 func (c *Client) SaveTrafficLog(l UserTrafficLog) {
 	c.userTFmu.Lock()

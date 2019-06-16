@@ -5,14 +5,15 @@ import (
 	"errors"
 	"fmt"
 	"github.com/orvice/kit/log"
+	"github.com/orvice/utils/env"
 	"net/http"
 	"sync"
 )
 
 var (
 	UpdateTrafficFail     = errors.New("Update Traffic Failed ")
-	UpdateOnlineCountFail = errors.New("Update Online Count Failed")
-	StatusCodeError       = errors.New("Status code is not OK")
+	UpdateOnlineCountFail = errors.New("Update Online Count Failed ")
+	StatusCodeError       = errors.New("Status code is not OK ")
 )
 
 type Client struct {
@@ -39,6 +40,10 @@ func NewClient(baseUrl, token string, nodeId, sType int) *Client {
 	}
 }
 
+func ClientFromEnv() *Client {
+	return NewClient(env.Get("MU_URI"), env.Get("MU_TOKEN"), env.GetInt("MU_NODE_ID"), env.GetInt("MU_SERVICE_TYPE"))
+}
+
 func (c *Client) SetLogger(l log.Logger) {
 	c.logger = l
 }
@@ -53,6 +58,10 @@ func (c *Client) getV2rayUsersUri() string {
 
 func (c *Client) postTrafficUri() string {
 	return fmt.Sprintf("%s/nodes/%d/traffic", c.baseUrl, c.nodeId)
+}
+
+func (c *Client) postIpUri() string {
+	return fmt.Sprintf("%s/nodes/%d/ip", c.baseUrl, c.nodeId)
 }
 
 func (c *Client) getNodesUri() string {
@@ -109,4 +118,26 @@ func (c *Client) GetNodes() ([]Node, error) {
 		return nil, err
 	}
 	return ret.Data, nil
+}
+
+type ipReq struct {
+	IP string `json:"ip"`
+}
+
+func (c *Client) PostIP(ip string) error {
+	var req = ipReq{
+		IP: ip,
+	}
+	data, err := json.Marshal(req)
+	if err != nil {
+		return err
+	}
+	_, statusCode, err := c.httpPost(c.postIpUri(), string(data))
+	if err != nil {
+		return err
+	}
+	if statusCode != http.StatusOK {
+		return errors.New(fmt.Sprintf("status code: %d", statusCode))
+	}
+	return nil
 }
