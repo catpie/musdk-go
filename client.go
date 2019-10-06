@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/orvice/kit/log"
-	"github.com/orvice/utils/env"
+	"log"
 	"net/http"
 	"sync"
+
+	"github.com/weeon/contract"
 )
 
 var (
@@ -24,10 +25,10 @@ type Client struct {
 
 	userTraffic map[int64]UserTrafficLog
 	userTFmu    *sync.Mutex
-	logger      log.Logger
+	logger      contract.Logger
 }
 
-func NewClient(baseUrl, token string, nodeId, sType int) *Client {
+func NewClient(baseUrl, token string, nodeId, sType int, logger contract.Logger) *Client {
 
 	return &Client{
 		baseUrl:     baseUrl,
@@ -36,12 +37,12 @@ func NewClient(baseUrl, token string, nodeId, sType int) *Client {
 		sType:       sType,
 		userTraffic: make(map[int64]UserTrafficLog),
 		userTFmu:    new(sync.Mutex),
-		logger:      log.NewDefaultLogger(),
+		logger:      logger,
 	}
 }
 
-func ClientFromEnv() *Client {
-	return NewClient(env.Get("MU_URI"), env.Get("MU_TOKEN"), env.GetInt("MU_NODE_ID"), env.GetInt("MU_SERVICE_TYPE"))
+func ClientFromEnv(logger contract.Logger) *Client {
+	return NewClient(env("MU_URI"), env("MU_TOKEN"), envInt("MU_NODE_ID"), envInt("MU_SERVICE_TYPE"), logger)
 }
 
 func (c *Client) SetLogger(l log.Logger) {
