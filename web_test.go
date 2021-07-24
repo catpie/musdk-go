@@ -10,7 +10,7 @@ func TestWeb(t *testing.T) {
 	token := "123"
 	sType := TypeSs
 
-	client := NewClient(baseUrl, token, nodeId, sType)
+	client := NewClient(baseUrl, token, nodeId, sType, nil)
 
 	users, err := client.GetUsers()
 

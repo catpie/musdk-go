@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"sync"
 
@@ -45,7 +44,7 @@ func ClientFromEnv(logger contract.Logger) *Client {
 	return NewClient(env("MU_URI"), env("MU_TOKEN"), envInt("MU_NODE_ID"), envInt("MU_SERVICE_TYPE"), logger)
 }
 
-func (c *Client) SetLogger(l log.Logger) {
+func (c *Client) SetLogger(l contract.Logger) {
 	c.logger = l
 }
 

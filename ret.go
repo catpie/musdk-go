@@ -55,3 +55,7 @@ type UserTrafficLog struct {
 	U      int64 `json:"u"`
 	D      int64 `json:"d"`
 }
+
+type OnlineInfo struct {
+	Count int64 `json:"count"`
+}
