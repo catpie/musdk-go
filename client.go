@@ -18,7 +18,7 @@ var (
 
 type Client struct {
 	baseUrl string
-	nodeId  int
+	nodeID  string
 	token   string
 	sType   int // service Type
 
@@ -27,12 +27,12 @@ type Client struct {
 	logger      contract.Logger
 }
 
-func NewClient(baseUrl, token string, nodeId, sType int, logger contract.Logger) *Client {
+func NewClient(baseUrl, token, nodeID string, sType int, logger contract.Logger) *Client {
 
 	return &Client{
 		baseUrl:     baseUrl,
 		token:       token,
-		nodeId:      nodeId,
+		nodeID:      nodeID,
 		sType:       sType,
 		userTraffic: make(map[int64]UserTrafficLog),
 		userTFmu:    new(sync.Mutex),
@@ -41,7 +41,7 @@ func NewClient(baseUrl, token string, nodeId, sType int, logger contract.Logger)
 }
 
 func ClientFromEnv(logger contract.Logger) *Client {
-	return NewClient(env("MU_URI"), env("MU_TOKEN"), envInt("MU_NODE_ID"), envInt("MU_SERVICE_TYPE"), logger)
+	return NewClient(env("MU_URI"), env("MU_TOKEN"), env("MU_NODE_ID"), envInt("MU_SERVICE_TYPE"), logger)
 }
 
 func (c *Client) SetLogger(l contract.Logger) {
@@ -49,19 +49,19 @@ func (c *Client) SetLogger(l contract.Logger) {
 }
 
 func (c *Client) getUsersUri() string {
-	return fmt.Sprintf("%s/nodes/%d/users", c.baseUrl, c.nodeId)
+	return fmt.Sprintf("%s/nodes/%s/users", c.baseUrl, c.nodeID)
 }
 
 func (c *Client) getV2rayUsersUri() string {
-	return fmt.Sprintf("%s/nodes/%d/v2rayUsers", c.baseUrl, c.nodeId)
+	return fmt.Sprintf("%s/nodes/%s/v2rayUsers", c.baseUrl, c.nodeID)
 }
 
 func (c *Client) postTrafficUri() string {
-	return fmt.Sprintf("%s/nodes/%d/traffic", c.baseUrl, c.nodeId)
+	return fmt.Sprintf("%s/nodes/%s/traffic", c.baseUrl, c.nodeID)
 }
 
 func (c *Client) postIpUri() string {
-	return fmt.Sprintf("%s/nodes/%d/ip", c.baseUrl, c.nodeId)
+	return fmt.Sprintf("%s/nodes/%s/ip", c.baseUrl, c.nodeID)
 }
 
 func (c *Client) getNodesUri() string {
