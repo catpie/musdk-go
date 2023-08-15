@@ -4,10 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"sync"
-
-	"github.com/weeon/contract"
 )
 
 var (
@@ -24,10 +23,10 @@ type Client struct {
 
 	userTraffic map[int64]UserTrafficLog
 	userTFmu    *sync.Mutex
-	logger      contract.Logger
+	logger      *slog.Logger
 }
 
-func NewClient(baseUrl, token, nodeID string, sType int, logger contract.Logger) *Client {
+func NewClient(baseUrl, token, nodeID string, sType int, logger *slog.Logger) *Client {
 
 	return &Client{
 		baseUrl:     baseUrl,
@@ -40,11 +39,11 @@ func NewClient(baseUrl, token, nodeID string, sType int, logger contract.Logger)
 	}
 }
 
-func ClientFromEnv(logger contract.Logger) *Client {
+func ClientFromEnv(logger *slog.Logger) *Client {
 	return NewClient(env("MU_URI"), env("MU_TOKEN"), env("MU_NODE_ID"), envInt("MU_SERVICE_TYPE"), logger)
 }
 
-func (c *Client) SetLogger(l contract.Logger) {
+func (c *Client) SetLogger(l *slog.Logger) {
 	c.logger = l
 }
 

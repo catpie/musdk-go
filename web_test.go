@@ -6,7 +6,7 @@ import (
 
 func TestWeb(t *testing.T) {
 	baseUrl := "http://x5.dev/mu"
-	nodeId := 1
+	nodeId := "us"
 	token := "123"
 	sType := TypeSs
 
